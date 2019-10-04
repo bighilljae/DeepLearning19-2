@@ -2,4 +2,10 @@
 .DS_Store
 
 # For LaTeX documentation
-docs/*.pdf
+docs/**/*.aux
+docs/**/*.log
+docs/**/*.out
+docs/**/*-converted-to.*
+docs/**/*.bbl
+docs/**/*.blg
+docs/**/*.synctex.gz
