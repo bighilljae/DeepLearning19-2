@@ -1,1 +1,5 @@
+# For Apple users
 .DS_Store
+
+# For LaTeX documentation
+docs/*.pdf
