@@ -1,1 +1,11 @@
+# For Apple users
 .DS_Store
+
+# For LaTeX documentation
+docs/**/*.aux
+docs/**/*.log
+docs/**/*.out
+docs/**/*-converted-to.*
+docs/**/*.bbl
+docs/**/*.blg
+docs/**/*.synctex.gz
