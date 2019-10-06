@@ -83,16 +83,22 @@
 %\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
 
 \begin{abstract}
-제곧내
+이번 프로젝트에서는 deepfake image들의 feature를 파악해  classification을 진행하는 deepfake detection model을 구현하고자 한다. Dataset으로는 Google에서 공개한 Deepfake Detection Dataset을 사용할 예정이고, [여기에 목표 입력] 하는 것이 우리의 목표이다.
 \end{abstract}
 
 \section{Intruduction}
 
 \subsection{Deepfakes}
 
-Deepfake는 어떤 것을 말한다. (대충 인터넷에 많고 사생활 침해도 우려된다는 내용). Deepfake를 생성하는 대표적인 방법은 generative adversarial networ (GAN)을 이용하는 방법이다.
+Deepfake는  말한다. Social media의 발전과 generative adversarial network (GAN)의 등장으로 deepfake image들이 
 
-따라서 이번 프로젝트에서 Deep
+\subsection{Importance of Deepfake Detection}
+
+Deepfake image들은 인터넷에서 humor 혹은 meme으로 소비되기도 하지만, 악의적으로 사용되어 많은 문제가 되기도 한다. 특히, social media의 발전으로 타인을 사칭하는 계정이나, deepfake pornography들이 대거 등장하고 있어 사회적으로 큰 문제가 되고 있다.
+
+이러한 deepfake가 낳은 사회적인 문제들로 인해, 최근 deepfake detection에 대한 연구의 필요성이 대두되고 있다. Deepfake detection은 누구 누구 등에 의해 연구되어 왔으며, computer vision 분야의 주요 issue 중 하나가 되었다. Google에서는 deepfake detection 연구를 위한 dataset을 공개하였고 \cite{googleblog}, Facebook에서도 deepfake detection challenge를 dataset 공개과 함께 진행할 예정임을 알렸다 \cite{facebookblog}.
+
+따라서 이번 프로젝트에서는 주어진 image가 deepfake인지 아닌지를 판단하는 deepfake detection model을 개발하고, 그 성능을 평가해 보고자 한다.
 
 \section{Datasets}
 
