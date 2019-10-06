@@ -90,7 +90,7 @@
 
 DeepFake는 GAN과 같은 deep neural network를 사용하여 사람의 얼굴을 합성하는 기술이다. 일상적인 사진들로도 쉽고 빠르게 자연스러운 결과물을 생성할 수 있다. 하지만, DeepFake 기술의 발전과 social media 상에서 많은 data를 구할 수 있게 되면서 타인을 사칭하는 계정과 DeepFake pornography의 양산으로 사회적으로 큰 문제가 되고 있다.
 
-이러한 DeepFake가 낳은 사회적인 문제들로 인해, 최근 DeepFake detection에 대한 연구의 필요성이 대두되고 있다. DeepFake detection은 현재 computer vision 분야의 주요 issue 중 하나이다. Google에서는 DeepFake detection 연구를 위한 dataset을 공개하였고 \cite{googleblog}, Facebook에서도 DeepFake detection challenge를 dataset 공개과 함께 진행할 예정임을 알렸다 \cite{facebookblog}.
+이러한 문제들로 인해 최근 DeepFake detection에 대한 연구의 필요성이 대두되면서, DeepFake detection은 현재 computer vision 분야의 주요 issue 중 하나가 되었다. Google에서는 DeepFake detection 연구를 위한 dataset을 공개하였고 \cite{googleblog}, Facebook에서도 DeepFake detection challenge를 dataset 공개과 함께 진행할 예정임을 알렸다 \cite{facebookblog}.
 
 따라서 이번 프로젝트에서는 주어진 image가 DeepFake image인지 아닌지를 판단하는 DeepFake detection model을 개발하고, 그 성능을 평가해 보고자 한다.
 
@@ -123,7 +123,7 @@ Google에서 공개한 DeepFake Detection Dataset \cite{DDD_GoogleJigSaw2019} �
 
 \section{Comparison with SOTA}
 
-Yuezen et~al.은 DeepFake 로 생성된 비디오에서는 눈을 감고 있는 이미지에 대해 모델의 학습이 부족하여 정상적으로 눈 깜빡임을 판별하는 CNN/RNN 모델을 제안한 바 있다 \yrcite{yuezeun2018eyeblink}. David et~al.의 연구에서는 RNN과 CNN에서 긍정적인 결과를 얻었지만 전체적인 접근 방식에는 약점이 있는 것을 보였다 \yrcite{DavidDetection}. 더 나아가 생성된 데이터를 바탕으로 학습하는것이 효율적이지 못하고 실제 이미지와 가짜 이미지를 동시에 학습이 필요하다고 제시하고 있다. 개선된 데이터셋을 바탕으로 더 기존의 학습 모델에서 더 나은 퍼포먼스를 보이는 모델을 생성하고자 한다.
+Li et~al.은 DeepFake 로 생성된 비디오에서는 눈을 감고 있는 이미지에 대해 모델의 학습이 부족하여 정상적으로 눈 깜빡임을 판별하는 CNN/RNN 모델을 제안한 바 있다 \yrcite{yuezeun2018eyeblink}. G{\"u}era et~al.의 연구에서는 RNN과 CNN에서 긍정적인 결과를 얻었지만 전체적인 접근 방식에는 약점이 있는 것을 보였다 \yrcite{DavidDetection}. 더 나아가 생성된 데이터를 바탕으로 학습하는것이 효율적이지 못하고 실제 이미지와 가짜 이미지를 동시에 학습이 필요하다고 제시하고 있다. 개선된 데이터셋을 바탕으로 더 기존의 학습 모델에서 더 나은 퍼포먼스를 보이는 모델을 생성하고자 한다.
 
 
 % In the unusual situation where you want a paper to appear in the
