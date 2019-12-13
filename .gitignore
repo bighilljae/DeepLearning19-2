@@ -9,3 +9,4 @@ docs/**/*-converted-to.*
 docs/**/*.bbl
 docs/**/*.blg
 docs/**/*.synctex.gz
+docs/**/*.pdf
