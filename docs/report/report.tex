@@ -123,14 +123,26 @@
 	
 	
 	\section{Main Challenges}
-	베이스라인 모델로 구현한 MesoNet 과 XceptionNet 은 sequential data를 다루지 않기 때문에 동영상 데이터가 가지는 'temporal feature'를 모델에서 표현할 수 없다. 두 모델의 구현은 개별 동영상 프레임을 잘라내어 각각의 channel 로서 frame corpus를 다루고 있다. 즉, 두 모델은 단순하게 각각의 frame이 DeepFake 로 생성된 frame 로 판별될 확률을 구하여, 전체 동영상의 probability 를 계산하고 있다. 여러 연구들은 개별 frame에서만 가지고 있는 정보 뿐만 아니라 전체 sequence 에서 유의미한 자료 (eg. Eye Blinking)를 활용해야 한다고 지적하고 있다. sequential data 를 활용하지 않는 모델은 성능을 확보하기 어렵다.
-	
-	\section{Architecture and Implementation or Something}
-	
+	DeepFake detection 은 video object classification 의 하위 카테고리로 여겨질 수 있다. 하지만 다른 일반적인 video object classification  문제와 다르게 DeepFake detection Model 은 manipulated 와 original간의 미묘한 차이를 잘 구분할 수 있어야 한다. 즉 아주 민감한 모델을 필요한다고 할 수 있다. 
 
-	\subsection{Implementation}
+	이를 만족하기 위해서, 우리는 연속적인 데이터를 효율적으로 다루고, 그것을 통해 생성된 DeepFake 이미지의 bounding region에 집중할 수 있어야 한다.
+
+	그러나 베이스라인 모델로 구현한 MesoNet 과 XceptionNet 은 sequential data를 다루지 않기 때문에 동영상 데이터가 가지는 'temporal feature'를 모델에서 표현할 수 없다. 두 모델의 구현은 개별 동영상 프레임을 잘라내어 각각의 channel 로서 frame corpus를 다루고 있다. 즉, 두 모델은 단순하게 각각의 frame이 DeepFake 로 생성된 frame 로 판별될 확률을 구하여, 전체 동영상의 probability 를 계산하고 있다. 여러 연구들은 개별 frame에서만 가지고 있는 정보 뿐만 아니라 전체 sequence 에서 유의미한 자료 (eg. Eye Blinking)를 활용해야 한다고 지적하고 있다. sequential data 를 활용하지 않는 모델은 성능을 확보하기 어렵다.
 	
+	\section{Architecture and Implementation}
+	이 프로젝트에서는 두 가지 방법 1. ConvNet + LSTM, 2. Region 3D convolution Network 두 가지 방식으로 문제 해결에 도전하였다.
 	
+	\cite{quovadis2017Recog} 에서는 ConvNet 과 LSTM 을 결합하는 것이 실질적으로 temporal structure를 잘 잡아내지 못한다고 설명하였다. 특히 object 의 급격한 변화에는 잘 기억하고 반응하지만, 복잡 미묘한 변화 사항에 대해서는 잘 반응하지 않는다고 설명한다. 또한 RNN 계열 모델들의 특징인 Gradient Vanishing 문제에 특히 취약한 것과 backpropagating 이 여러 frame 을 통해서 이루어질 때 train 비용이 늘어나는 한계도 있다. 실제로 baseline Model \cite{quovadis2017Recog}에 LSTM module 을 추가하였지만 유의미한 성능 향상을 얻지 못하였다.
+
+	3D Convolutional Network 는 spatiotemporal feature를 학습하기 위한 network로 \cite{TranBFTP14} 에서 제안되었다. 3D input을 2D Convolution에 넘겨 처리하면 Baseline Model 과 같이 3D input을 각각의 channel 로서만 간주하기 때문에 sequential data를 처리하지 못하기 때문이다.
+
+	3D convolution : \[ v^{xyz}_{i,j} = f_{activ}(b_{ij} + \sum_{m}\sum_{p=0}^{P_{i}=1}\sum_{q=0}^{Q_{i}-1}\sum_{r=0}^{R_{i}-1}w_{ijm}^{pq}v_{(i-1)m}^{(x+p)(x+q)}) \]
+
+	3D ConvNets 는 3D convolution 과 3D pooling operation을 이용하여 temporal information을 modeling 할 수 있다.
+
+	\cite{abs-1811-00656} 에서는 현재 알고리즘으로 생성하고 있는 DeepFake facial image 의 경우에는 합성된 영역이 affine transformation 등에 대해서 취약하다고 설명하고 있다. 즉 초기 몇 프레임에 대해서는 잘 합성되었더라도 각도나 object 와의 걸이에 따라 합성 품질이 떨어지게 된다. (i.e. scaling, rotation and shearing) 따라서 image 경계의 이러한 "Warped" 특징을 잡기 위해서 우리는 R-3CD \cite{XuDS17} 에서 제시한 'Temporal Proposal Subnet'을 사용하였다. 
+
+	'Temporal Proposal Subnet'은 "Faster RCNN"의 "RPN"의 구조와 굉장히 비슷한데, 앞선 C3D networks 의 Conv5 layers 로부터 인풋을 받아서 $(R^{3\times\frac{L}{8}\times\frac{W}{16}\times\frac{H}{16}})$ 1x1 convolution을 통해서 dimension을 줄이고 $(R^{3\times\frac{L}{8}\times1\times1})$ DeepFake 여부를 판별하는 binary label을 anchor box를 통해서 계산하고 각 volume pixel의 점수를 계산하여 "Warped Region Proposal"을 생성한다. Fully connected layer 대신에 1x1 convolution을 통하여 점수를 계산하기 때문에 네트워크 전체는 end-to-end 학습이 가능한 구조이다.
 	
 	\section{Conclusion}
 	% Comparison with SOTA
