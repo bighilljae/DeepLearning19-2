@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{subfigure}
 \usepackage{booktabs} % for professional tables
+\usepackage{multirow}
 
 % hyperref makes hyperlinks in the resulting PDF.
 % If your build breaks (sometimes temporarily if a hyperlink spans a page)
@@ -132,6 +133,33 @@
 	
 	\section{Conclusion}
 	% Comparison with SOTA
+	테이블 인용 시 Table~\ref{conclusion} 과 같이 사용하면 됩니다.
+	
+	\begin{table}[t]
+		\caption{여기에 텍스트 입력. Dataset 이름 앞의 \textsc{R}, \textsc{F}는 각각 real 혹은 fake video들의 dataset을 의미한다.}
+		\label{conclusion}
+		\vskip 0.15in
+		\begin{center}
+			\begin{small}
+				\begin{sc}
+					\begin{tabular}{lrrrr}
+						\toprule
+						\multirow{2}{*}{Datasets}	&	\multicolumn{4}{c}{Models}		\\
+						&	AAA	&	BBB	&	CCC	&	R-C3D	\\
+						\midrule
+						R-Actors		&	15.0	&	15.0	&	15.0	&	89.1	\\
+						R-YouTube		&	15.0	&	15.0	&	15.0	&	75.5	\\
+						F-DeepFakes		&	15.0	&	15.0	&	15.0	&	94.4	\\
+						F-Face2Face		&	15.0	&	15.0	&	15.0	&	86.6	\\
+						F-FaceSwap		&	15.0	&	15.0	&	15.0	&	90.4	\\
+						F-NeuralTextures &	15.0	&	15.0	&	15.0	&	87.6	\\
+						\bottomrule
+					\end{tabular}
+				\end{sc}
+			\end{small}
+		\end{center}
+		\vskip -0.1in
+	\end{table}
 	
 	\section{Future Work}
 	% TODO
