@@ -106,7 +106,7 @@
 	홍주연 (2015410041), 도재형 (2016320210) -- SOTA model \& dataset research 
 	\section{Related Works}
 	
-	현재 FaceForensics++ 에서 제시하고 있는 SOTA라고 볼 수 있는 연구는 MesoNet\cite{darius2018MesoNet} 과 Xception\cite{chollet2017xception}이 있다.
+	현재 FaceForensics++ \cite{roessler2019faceforensicspp} 에서 제시하고 있는 SOTA라고 볼 수 있는 연구는 MesoNet\cite{darius2018MesoNet} 과 XceptionNet\cite{chollet2017xception}를 소개할 수 있다. 
 	
 		\subsection{DeepFake Datasets}
 		% FaceForensics, google DFD
@@ -115,6 +115,7 @@
 		
 		\subsection{Normal Image and Video Classifier}
 		% Xception, ECO
+		Xception 모델은 inception module을 이용하여 채널 간의 관계(Cross-Channel Correlation)을 찾아 분리하는 것과 spatial correlation을 분리하는 것을 목표로 합니다. 이 목표를 수행하기 위해서 모델은 1x1 Conv 로 Channel reduction 을 수행하는데, 이는 cross channel correlation을 매핑을 하고, output channel 을 spatial correlation 을 
 		
 		\subsection{DeepFake Video Detection Models}
 		% Mesonet, Eye blinking
@@ -124,12 +125,11 @@
 	% Baseline
 	% Algorithm
 	
+	\section{Main Challenges}
+	베이스라인 모델로 구현한 MesoNet 과 XceptionNet 은 sequential data를 다루지 않기 때문에 동영상 데이터가 가지는 'temporal feature'를 모델에서 표현할 수 없다. 두 모델의 구현은 개별 동영상 프레임을 잘라내어 각각의 channel 로서 frame corpus를 다루고 있다. 즉, 두 모델은 단순하게 각각의 frame이 DeepFake 로 생성된 frame 로 판별될 확률을 구하여, 전체 동영상의 probability 를 계산하고 있다. 여러 연구들은 개별 frame에서만 가지고 있는 정보 뿐만 아니라 전체 sequence 에서 유의미한 자료 (eg. Eye Blinking)를 활용해야 한다고 지적하고 있다. sequential data 를 활용하지 않는 모델은 성능을 확보하기 어렵다.
+	
 	\subsection{Implementation}
 	
-	
-	
-	\section{Main Challenges}
-	% TODO
 	
 	
 	\section{Conclusion}
